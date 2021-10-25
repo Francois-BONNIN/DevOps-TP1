@@ -32,7 +32,33 @@ Index.html :
 ```
 
 Initialisation d'un conteneur et création d'un volume :
-`docker run --name some-nginx -p 8080:80 -v /home/user/TP1:/usr/share/nginx/html:ro -d nginx`
+`docker run --name some-nginx -p 8080:80 -v /home/user/TP1:/usr/share/nginx/html -d nginx`
+
+Suppression du conteneur existant : 
+`docker stop some-nginx`
+`docket rm some-nginx`
+
+Utilisation de la commande cp :
+`docker run --name some-nginx-with-cp -v /host/path/nginx.conf:/etc/nginx/nginx.conf:ro -d nginx`
+`docker run --name tmp-nginx-container -d nginx`
+`docker cp tmp-nginx-container:/etc/nginx/nginx.conf /host/path/nginx.conf`
+`docker rm -f tmp-nginx-container`
+
+## Builder une image
+
+Création d'un Dockerfile :
+`touch DockerFile`
+
+```
+FROM nginx
+ADD index.html /usr/share/nginx/html
+```
+
+Build de l'image : `docker build -t some-nginx`
 
 
+Exécution de l'image : `docker run --name some-nginx-container -d some-nginx`
 
+Observations :
+- Optimisation et centralisations des commandes pour la construction d'image
+- Rapidité pour le Dockerfile
