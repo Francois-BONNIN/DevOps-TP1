@@ -62,3 +62,46 @@ Exécution de l'image : `docker run --name some-nginx-container -d some-nginx`
 Observations :
 - Optimisation et centralisations des commandes pour la construction d'image
 - Rapidité pour le Dockerfile
+
+## Question 7 TP
+
+### Création du fichier docker-compose.yml
+
+`$ touch docker-compose.yml`
+
+Ce fichier utilisera l'image *praqma/network-multitool* et va créer 3 services : **web**, **app** et **db**.
+Ce fichier créera également 2 réseaux distincs : 1 pour le **frontend** et 1 pour le **backend**
+
+On obtient le fichier suivant :
+```yml
+version: "3"
+
+services:
+    web:
+        image: praqma/network-multitool:latest
+        ports:
+        - 8080:80
+        networks:
+            - frontend
+
+    app:
+        image: praqma/network-multitool:latest
+        networks:
+            - backend
+      
+    db:
+        image: praqma/network-multitool:latest
+        ports: 
+        - 3306:3306
+        networks:
+        - backend
+        environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=ynov 
+        - MYSQL_USER=user 
+        - MYSQL_PASSWORD=pwd
+
+networks:
+  frontend:
+  backend:
+```
